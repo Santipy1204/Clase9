@@ -133,7 +133,7 @@ class Ventana1(QMainWindow):
                                         "padding: 10px;"
                                         "margin-top: 40px;")
         
-       # self.BotonRegistrar.clicked.connect(self.accion_BotonRegistrar)
+        self.BotonRegistrar.clicked.connect(self.accion_BotonRegistrar)
         
         
         self.BotonLimpiar = QPushButton("Limpiar")
@@ -142,7 +142,7 @@ class Ventana1(QMainWindow):
                                         "color: FFFFFF;"
                                         "padding: 10px;"
                                         "margin-top: 40px;")
-        
+        self.BotonLimpiar.clicked.connect(self.accion_BotonLimpiar)
         
         self.ladoIzquierdo.addRow(self.BotonRegistrar, self.BotonLimpiar)
         
@@ -162,9 +162,13 @@ class Ventana1(QMainWindow):
 
         self.imagen.setLayout(self.horizontal)
 
-    # este if de desición se llama si se ejecuta directamente el archivo
+    def accion_BotonLimpiar(self):
+        pass
 
 
+    
+    def accion_BotonRegistrar(self):
+         pass
 if __name__ == "__main__":
     # Hacer que la aplicación se genere
     app = QApplication(sys.argv)
