@@ -1,21 +1,12 @@
 import sys
 from PyQt5.QtWidgets import (
     QApplication,
-    QGraphicsScene,
-    QGraphicsView,
-    QGraphicsItem,
-    QGraphicsLineItem,
-    QGraphicsTextItem,
     QMainWindow,
-    QWidget,
-    QDesktopWidget,
     QLabel,
-    QPushButton,
-    QMessageBox,
-    QVBoxLayout,
     QHBoxLayout,
     QFormLayout,
     QLineEdit,
+    QPushButton
 )
 from PyQt5.QtGui import QColor, QFont, QPixmap, QIcon
 from PyQt5.QtCore import Qt
@@ -97,8 +88,7 @@ class Ventana1(QMainWindow):
         self.nombre.setFixedWidth(250)
 
         self.ladoIzquierdo.addRow(
-            '<font color="#FFFFFF">Nombre completo*</font>', self.nombre
-        )
+            '<font color="#FFFFFF">Nombre completo*</font>', self.nombre)
 
         self.usuario = QLineEdit()
         self.usuario.setFixedWidth(250)
@@ -123,17 +113,50 @@ class Ventana1(QMainWindow):
             self.password2,
         )
         self.password2.setEchoMode(QLineEdit.Password)
-
-        self.password2 = QLineEdit()
-        self.password2.setFixedWidth(250)
+ 
+        self.documento = QLineEdit()
+        self.documento.setFixedWidth(250)
 
         self.ladoIzquierdo.addRow(
-            '<font color="#FFFFFF">Vuelva a ingresar la contraseña*</font>',
-            self.password2,
-        )
+            '<font color="#FFFFFF">Documento*</font>', self.documento)
+        
+        self.correo = QLineEdit()
+        self.correo.setFixedWidth(250)
 
+        self.ladoIzquierdo.addRow(
+            '<font color="#FFFFFF">Correo*</font>', self.correo)
+        
+        self.BotonRegistrar = QPushButton("Registar")
+        self.BotonRegistrar.setFixedWidth(90)
+        self.BotonRegistrar.setStyleSheet("background-color: #008B45;"
+                                        "color: FFFFFF;"
+                                        "padding: 10px;"
+                                        "margin-top: 40px;")
+        
+       # self.BotonRegistrar.clicked.connect(self.accion_BotonRegistrar)
+        
+        
+        self.BotonLimpiar = QPushButton("Limpiar")
+        self.BotonLimpiar.setFixedWidth(90)
+        self.BotonLimpiar.setStyleSheet("background-color: #008B45;"
+                                        "color: FFFFFF;"
+                                        "padding: 10px;"
+                                        "margin-top: 40px;")
+        
+        
+        self.ladoIzquierdo.addRow(self.BotonRegistrar, self.BotonLimpiar)
+        
+        
+        
+        
+        
+        
+        
+        
         # Agregamos el layout izquierdo al layout horizontal
         self.horizontal.addLayout(self.ladoIzquierdo)
+        
+        
 
         # ------------------- PONER AL FINAL --------------------
 
@@ -152,4 +175,4 @@ if __name__ == "__main__":
     # Hacer que el objeto se muestre
     ventana1.show()
 
-    sys.exit(app.exec_())
+    sys.exit(app.exec_())     
