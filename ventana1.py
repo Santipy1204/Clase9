@@ -125,7 +125,7 @@ class Ventana1(QMainWindow):
         self.BotonRegistrar = QPushButton("Registar")
         self.BotonRegistrar.setFixedWidth(90)
         self.BotonRegistrar.setStyleSheet("background-color: #008B45;"
-                                        "color: FFFFFF;"
+                                        "color: #FFFFFF;"
                                         "padding: 10px;"
                                         "margin-top: 40px;")
         
@@ -135,7 +135,7 @@ class Ventana1(QMainWindow):
         self.BotonLimpiar = QPushButton("Limpiar")
         self.BotonLimpiar.setFixedWidth(90)
         self.BotonLimpiar.setStyleSheet("background-color: #008B45;"
-                                        "color: FFFFFF;"
+                                        "color: #FFFFFF;"
                                         "padding: 10px;"
                                         "margin-top: 40px;")
         self.BotonLimpiar.clicked.connect(self.accion_BotonLimpiar)
@@ -278,7 +278,7 @@ class Ventana1(QMainWindow):
         self.BotonBuscar = QPushButton("Buscar")
         self.BotonBuscar.setFixedWidth(90)
         self.BotonBuscar.setStyleSheet("background-color: #008B45;"
-                                          "color: FFFFFF;"
+                                          "color: #FFFFFF;"
                                           "padding: 10px;"
                                           "margin-top: 40px;")
 
@@ -288,9 +288,11 @@ class Ventana1(QMainWindow):
         self.BotonRecuperar = QPushButton("Recuperar")
         self.BotonRecuperar.setFixedWidth(90)
         self.BotonRecuperar.setStyleSheet("background-color: #008B45;"
-                                       "color: FFFFFF;"
+                                       "color: #FFFFFF;"
                                        "padding: 10px;"
                                        "margin-top: 40px;")
+        
+        self.BotonRecuperar.clicked.connect(self.accion_BotonRecuperar)
 
         # agregamos los botones
         self.ladoDerecho.addRow(self.BotonBuscar, self.BotonRecuperar)
@@ -307,6 +309,9 @@ class Ventana1(QMainWindow):
         # ------------------- PONER AL FINAL --------------------
 
         self.imagen.setLayout(self.horizontal)
+        
+        
+        #------------CONSTRUCTOR DE LA VENTANA EMERGENTE-----------
 
         self.ventanaDialogo = QDialog(None, QtCore.Qt.WindowSystemMenuHint | QtCore.Qt.WindowTitleHint)
 
@@ -320,7 +325,7 @@ class Ventana1(QMainWindow):
         self.vertical = QVBoxLayout()
 
         self.mensaje = QLabel('')
-        self.mensaje.setStyleSheet('backgroud-color: #EE6AA7 ; color: #000000 ; padding:10px;')
+        self.mensaje.setStyleSheet('background-color: #008B45 ; color: #FFFFFF ; padding:10px;')
         self.vertical.addWidget(self.mensaje)
         self.vertical.addWidget(self.opciones)
 
@@ -401,7 +406,6 @@ class Ventana1(QMainWindow):
                 self.nombre.text() + ';'
                 + self.usuario.text() + ';'
                 + self.password.text() + ';'
-                + self.password2.text() + ';'
                 + self.documento.text() + ';'
                 + self.correo.text() + ';'
                 + self.pregunta1.text() + ';'
@@ -424,6 +428,9 @@ class Ventana1(QMainWindow):
             self.file.close()
 
     def accion_BotonBuscar(self):
+        
+        
+        self.datosCorrectos = True
 
         self.ventanaDialogo.setWindowTitle("Formulario de registro")
 
@@ -501,11 +508,129 @@ class Ventana1(QMainWindow):
                 # Hacemos que la ventana de dialogo se vea:
                 self.ventanaDialogo.exec_()
 
+    def accion_BotonRecuperar(self):
+        
+        #Colocamos la variable para controlar que los datos ingresados son datos correctos:
+        self.datosCorrectos = True
+        #establecemos el titulo de la ventana
+        self.ventanaDialogo.setWindowTitle("Recuperar contraseña")
+        
+        #Validamos que se hayan buscado las preguntas
+        
+        if (
+            self.pregunta1.text() == "" or
+            self.pregunta2.text() == "" or
+            self.pregunta3.text() == ""
+                 
+        ):
+            self.datosCorrectos = False
+            
+            #Escribimos texto explicativo
+            
+            self.mensaje.setText("Para recuperar la contraseña debe"
+                                 "\nbuscar las preguntas de verificación."
+                                 "\n\nPrimero se ingresa su documento y luego"
+                                 "\npresione el botón 'Buscar'")
+            
+            #Hacemos que la ventana de dialogo se vea
+            self.ventanaDialogo.exec_()
+        if(
+            
+            self.pregunta1.text() != "" and
+            self.respuesta1.text() == "" and
+            self.pregunta2.text() != "" and
+            self.respuesta2.text() == "" and
+            self.pregunta3.text() != "" and
+            self.respuesta3.text() == ""
+            
+        ):
+            self.datosCorrectos = False
+            
+            #Escribimos el texto explicativo:
+            
+            self.mensaje.setText("Para recuperar la contraseña debe"
+                                 "\ningresar las respuestas a cada pregunta")
+            
+            self.ventanaDialogo.exec_()
+            
+        if (
+        
+            self.datosCorrectos
+        
+        ):
+            
+            self.file = open('datos/clientes.txt', 'rb')
+
+            usuarios = []
+
+            while self.file:
+                linea = self.file.readline().decode('UTF-8')
+
+                lista = linea.split(';')
+                if linea == '':
+                    break
+                u = Cliente(
+                    lista[0],lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7],lista[8],lista[9],lista[10])
+
+                usuarios.append(u)
 
 
+            self.file.close() 
+            
+            #En este punto tenemos la lista usuario, con todos los usuarios:
+            #Variable para controlar si existe el documento:
+            existeDocumento = False
+            
+            #Definimos las variables para guardar las preguntas:
+            resp1 = ""
+            resp2 = ""
+            resp3 = ""
+            passw = ""
+            
+            #Buscamos en la lista usuario por usuario si existe la cédula:
+            
+            for u in usuarios:
+                #Comparamos el documento ingresado
+                #si corresponde el documento, es el usuario correcto:
+                if u.documento == self.documento.text():
+                    #indicamos que encontramos el documento
+                    existeDocumento = True
+                    #Guardamos las respuestas
+                    resp1 = u.respuesta1
+                    resp2 = u.respuesta2
+                    resp3 = u.respuesta3
+                    passw = u.password
+                    #paramos el for
+                    break
+                
+            
+            if (
+                
+                #Usamos strip() para borrar espacios y saltos de lineas
+                self.respuesta1.text().lower().strip() == resp1.lower().strip() and
+                self.respuesta2.text().lower().strip() == resp2.lower().strip() and
+                self.respuesta3.text().lower().strip() == resp3.lower().strip()    
+                
+            ):
+                
+                #Limpiamos los campos
+                self.accion_BotonLimpiar()
+                
+                #Escribimos el texto explicativo:
+                self.mensaje.setText("Contraseña: " + passw)
+                
+                #Hacemos que el dialogo se vea
+            else:
+                #Escribimos el texto explicativo:
+                self.mensaje.setText("Las respuestas son incorrectas para estas"
+                                     "\n+preguntas de recuperación de contraseña")
+                
+                #Hacemos que la ventana dialogo se vea:
+            self.ventanaDialogo.exec_()
+            
 
-if __name__ == "__main__":
-    # Hacer que la aplicación se genere
+
+if __name__ == "__main__":    # Hacer que la aplicación se genere
     app = QApplication(sys.argv)
 
     # Crar un objeto de tipo Ventana1 con el nombre ventana 1
