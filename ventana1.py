@@ -424,6 +424,8 @@ class Ventana1(QMainWindow):
             self.file.close()
 
     def accion_BotonBuscar(self):
+        
+        self.datosCorrectos = True
 
         self.ventanaDialogo.setWindowTitle("Formulario de registro")
 
