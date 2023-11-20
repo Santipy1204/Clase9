@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QHBoxLayout, QFor
 
 from PyQt5.QtGui import QColor, QFont, QPixmap, QIcon
 from PyQt5.QtCore import Qt
+from cliente import Cliente
 
 
 class Ventana1(QMainWindow):
@@ -12,7 +13,7 @@ class Ventana1(QMainWindow):
         super(Ventana1, self).__init__(parent)
 
         # Ponemos el titulo
-        self.setWindowTitle("Formlario de registro")
+        self.setWindowTitle("Formulario de registro")
 
         # Poner el icono
 
@@ -193,7 +194,7 @@ class Ventana1(QMainWindow):
 
         #hacemos la pregunta 1
         self.labelPregunta1 = QLabel('Pregunta de verificacion 1*')
-
+        self.labelPregunta1.setStyleSheet("color : white;")
         # agregamos
         self.ladoDerecho.addRow(self.labelPregunta1)
 
@@ -206,7 +207,7 @@ class Ventana1(QMainWindow):
 
         #hacemos el de respuesta
         self.labelRespuesta1 = QLabel('Respuesta de verificacion 1*')
-
+        self.labelRespuesta1.setStyleSheet("color : white;")
         # agregamos el letrero
         self.ladoDerecho.addRow(self.labelRespuesta1)
 
@@ -221,7 +222,7 @@ class Ventana1(QMainWindow):
 
         # hacemos la pregunta \2
         self.labelPregunta2 = QLabel('Pregunta de verificacion 2*')
-
+        self.labelPregunta2.setStyleSheet("color : white;")
         # agregamos
         self.ladoDerecho.addRow(self.labelPregunta2)
 
@@ -234,7 +235,7 @@ class Ventana1(QMainWindow):
 
         # hacemos el de respuesta
         self.labelRespuesta2 = QLabel('Respuesta de verificacion 2*')
-
+        self.labelRespuesta2.setStyleSheet("color : white;")
         # agregamos el letrero
         self.ladoDerecho.addRow(self.labelRespuesta2)
 
@@ -249,7 +250,7 @@ class Ventana1(QMainWindow):
 
         # hacemos la pregunta 3
         self.labelPregunta3 = QLabel('Pregunta de verificacion 3*')
-
+        self.labelPregunta3.setStyleSheet("color : white;")
         # agregamos
         self.ladoDerecho.addRow(self.labelPregunta3)
 
@@ -262,7 +263,7 @@ class Ventana1(QMainWindow):
 
         # hacemos el de respuesta
         self.labelRespuesta3 = QLabel('Respuesta de verificacion 3*')
-
+        self.labelRespuesta3.setStyleSheet("color : white;")
         # agregamos el letrero
         self.ladoDerecho.addRow(self.labelRespuesta3)
 
@@ -280,6 +281,8 @@ class Ventana1(QMainWindow):
                                           "color: FFFFFF;"
                                           "padding: 10px;"
                                           "margin-top: 40px;")
+
+        self.BotonBuscar.clicked.connect(self.accion_BotonBuscar)
 
         # hacemos el boton recuperar contraseña
         self.BotonRecuperar = QPushButton("Recuperar")
@@ -305,6 +308,26 @@ class Ventana1(QMainWindow):
 
         self.imagen.setLayout(self.horizontal)
 
+        self.ventanaDialogo = QDialog(None, QtCore.Qt.WindowSystemMenuHint | QtCore.Qt.WindowTitleHint)
+
+        self.ventanaDialogo.resize(300, 150)
+        self.botonAceptar = QDialogButtonBox.Ok
+        self.opciones = QDialogButtonBox(self.botonAceptar)
+        self.opciones.accepted.connect(self.ventanaDialogo.accept)
+
+        self.ventanaDialogo.setWindowTitle("Formulario de registro")
+        self.ventanaDialogo.setWindowModality(Qt.ApplicationModal)
+        self.vertical = QVBoxLayout()
+
+        self.mensaje = QLabel('')
+        self.mensaje.setStyleSheet('backgroud-color: #EE6AA7 ; color: #000000 ; padding:10px;')
+        self.vertical.addWidget(self.mensaje)
+        self.vertical.addWidget(self.opciones)
+
+        self.ventanaDialogo.setLayout(self.vertical)
+
+        self.datosCorrectos = True
+
     def accion_BotonLimpiar(self):
         self.nombre.setText('')
         self.usuario.setText('')
@@ -320,34 +343,34 @@ class Ventana1(QMainWindow):
         self.respuesta3.setText('')
 
     def accion_BotonRegistrar(self):
-       self.ventanaDialogo = QDialog(None, QtCore.Qt.WindowSystemMenuHint | QtCore.Qt.WindowTitleHint)
+        self.ventanaDialogo = QDialog(None, QtCore.Qt.WindowSystemMenuHint | QtCore.Qt.WindowTitleHint)
 
-       self.ventanaDialogo.resize(300,150)
-       self.botonAceptar = QDialogButtonBox.Ok
-       self.opciones = QDialogButtonBox(self.botonAceptar)
-       self.opciones.accepted.connect(self.ventanaDialogo.accept)
+        self.ventanaDialogo.resize(300,150)
+        self.botonAceptar = QDialogButtonBox.Ok
+        self.opciones = QDialogButtonBox(self.botonAceptar)
+        self.opciones.accepted.connect(self.ventanaDialogo.accept)
 
-       self.ventanaDialogo.setWindowTitle("Formulario de registro")
-       self.ventanaDialogo.setWindowModality(Qt.ApplicationModal)
-       self.vertical = QVBoxLayout()
+        self.ventanaDialogo.setWindowTitle("Formulario de registro")
+        self.ventanaDialogo.setWindowModality(Qt.ApplicationModal)
+        self.vertical = QVBoxLayout()
 
-       self.mensaje = QLabel('')
-       self.mensaje.setStyleSheet('backgroud-color: #EE6AA7 ; color: #000000 ; padding:10px;')
-       self.vertical.addWidget(self.mensaje)
-       self.vertical.addWidget(self.opciones)
+        self.mensaje = QLabel('')
+        self.mensaje.setStyleSheet('backgroud-color: #EE6AA7 ; color: #000000 ; padding:10px;')
+        self.vertical.addWidget(self.mensaje)
+        self.vertical.addWidget(self.opciones)
 
-       self.ventanaDialogo.setLayout(self.vertical)
+        self.ventanaDialogo.setLayout(self.vertical)
 
-       self.datosCorrectos = True
-       if   (self.password.text() != self.password2.text()):
-        self.datosCorrectos = False
+        self.datosCorrectos = True
+        if (self.password.text() != self.password2.text()):
+            self.datosCorrectos = False
 
-        self.mensaje.setText('Los passwords no son iguales')
-        self.mensaje.setStyleSheet('backgroud-color: #EE6AA7 ; color:#000000; padding:10px;')
+            self.mensaje.setText('Las contraseñas no son iguales')
+            self.mensaje.setStyleSheet('backgroud-color: #EE6AA7 ; color:#000000; padding:10px;')
 
-        self.ventanaDialogo.exec_()
+            self.ventanaDialogo.exec_()
 
-        if   (
+        if (
                 self.nombre.text() == ''
                or self.usuario.text() == ''
                or self.password.text() == ''
@@ -399,9 +422,88 @@ class Ventana1(QMainWindow):
                 if linea == '':
                     break
             self.file.close()
-            
-            
-            
+
+    def accion_BotonBuscar(self):
+
+        self.ventanaDialogo.setWindowTitle("Formulario de registro")
+
+        if (
+            self.documento.text == ''
+
+        ):
+            self.datosCorrectos = False
+
+            self.mensaje.setText('Si va a buscar las preguntas para recuperar contraseña debe ingresar el documento')
+
+            self.ventanaDialogo.exec_()
+
+        if (
+            not self.documento.text().isnumeric()
+
+        ):
+            self.datosCorrectos = False
+
+            self.mensaje.setText('El documento debe ser numerico')
+
+            self.ventanaDialogo.exec_()
+
+            self.documento.setText('')
+
+        if(
+            self.datosCorrectos
+        ):
+            self.file = open('datos/clientes.txt', 'rb')
+
+            usuarios = []
+
+            while self.file:
+                linea = self.file.readline().decode('UTF-8')
+
+                lista = linea.split(';')
+                if linea == '':
+                    break
+                u = Cliente(
+                    lista[0],lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7],lista[8],lista[9],lista[10])
+
+                usuarios.append(u)
+
+
+            self.file.close()
+                
+            # En este punto tenemos la lista usuarios con todos los usuarios
+
+            # Variable para controlar si existe el documento:
+            existeDocumento = False
+
+            # Buscamos en la lista usuario por usuario si existe la cedula:
+            for u in usuarios:
+                # comparamos el documento ingresado:
+                # si corresponde con el documento, es el usuario correcto:
+                if u.documento == self.documento.text():
+                    # mostramos las preguntas en el formulario
+                    self.pregunta1.setText(u.pregunta1)
+                    self.pregunta2.setText(u.pregunta2)
+                    self.pregunta3.setText(u.pregunta3)
+                    # Indicamos que encontramos el documento
+                    existeDocumento = True
+
+                    # Paramos el for
+                    break
+
+            # Si no existe un usuario con este documento:
+            if (
+                        not existeDocumento
+            ):
+                # Escribimos el texto explicativo:
+                self.mensaje.setText("No existe un usuario con este documento:\n"
+                                        + self.documento.text())
+
+                # Hacemos que la ventana de dialogo se vea:
+                self.ventanaDialogo.exec_()
+
+
+
+
 if __name__ == "__main__":
     # Hacer que la aplicación se genere
     app = QApplication(sys.argv)
