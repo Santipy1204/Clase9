@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QMainWindow, QLabel, QHBoxLayout, QApplication, QScr
     QVBoxLayout, QButtonGroup, QPushButton
 
 from cliente import Cliente
-
+from ventana3 import Ventana3
 
 class Ventana2(QMainWindow):
 
@@ -159,6 +159,24 @@ class Ventana2(QMainWindow):
                     
         self.botones.idClicked.connect(self.metodo_accionBotones)
         
+        
+        #-------------------- BOTÓN TABULAR----------------------
+        self.botonFormaTabular = QPushButton("Forma tabular")
+        
+        #Establecemos el ancho del botón
+        self.botonFormaTabular.setFixedWidth(90)
+        #Le ponemos estilos
+        self.botonFormaTabular.setStyleSheet("background-color: #008B45;"
+                                        "color: #FFFFFF;"
+                                        "padding: 10px;"
+                                        "margin-top: 10px;")
+        
+        self.botonFormaTabular.clicked.connect(self.metodo_botonFormaTabular)
+        
+        #Agregaos el botón al layout
+        self.vertical.addWidget(self.botonFormaTabular)
+
+        
         #-------------------- BOTÓN VOLVER ----------------------
         self.botonVolver = QPushButton("Volver")
         
@@ -187,4 +205,24 @@ class Ventana2(QMainWindow):
     def metodo_botonVolver(self):
         self.hide()
         self.ventanaAnterior.show()
-            
+        
+    def metodo_botonFormaTabular(self):
+        self.hide()
+        self.ventana3 = Ventana3(self)
+        self.ventana3.show()   
+  
+    # Hacer que la aplicación se genere
+  
+if __name__ == "__main__":  
+    
+    app = QApplication(sys.argv)
+
+        # Crar un objeto de tipo Ventana1 con el nombre ventana 1
+    ventana2 = Ventana2()
+
+        # Hacer que el objeto se muestre
+    ventana2.show()
+
+    sys.exit(app.exec_())          
+
+
