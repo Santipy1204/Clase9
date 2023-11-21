@@ -3,15 +3,15 @@ import sys
 
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtWidgets import QMainWindow, QLabel, QHBoxLayout, QApplication, QScrollArea, QWidget, QGridLayout, \
-    QVBoxLayout, QButtonGroup
+    QVBoxLayout, QButtonGroup, QPushButton
 
 from cliente import Cliente
 
 
 class Ventana2(QMainWindow):
 
-    def __init__(self,anterior):
-        super(Ventana2,self).__init__(anterior)
+    def __init__(self, anterior):
+        super(Ventana2, self).__init__(anterior)
 
         self.ventanaAnterior = anterior
 
@@ -81,19 +81,18 @@ class Ventana2(QMainWindow):
         #lista vacia para guardar usuarios
         self.usuarios = []
 
-        #recorremos el archivo, linea por linea
         while self.file:
+        #recorremos el archivo, linea por linea
             linea = self.file.readline().decode('UTF-8')
-            linea = linea.split(';')
 
+            lista = linea.split(';')
             if linea == '':
                 break
-
-            #creamos un objeto tipo cliente llamado u
-            u = (Cliente( lista[0], lista[1], lista[2], lista[3], lista[4], lista[5], lista[6], lista[7], lista[8], lista[9],
-                lista[10]))
+            u = Cliente(
+                lista[0],lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7],lista[8],lista[9],lista[10])
 
             self.usuarios.append(u)
+
 
         self.file.close()
 
@@ -116,14 +115,65 @@ class Ventana2(QMainWindow):
         #debe agrupar a todos lo botones internos
         self.botones.setExclusive(False)
 
+        for fila in range(1, self.numeroFilas):
+            for columna in range(self.elementosPorColumna+1):
+                
+                #Validamos que se estan ingresando la cantidad de usuarios correcya:
+                if self.contador < self.numeroUsuarios:      
+                    #en cada celda de la cuadricula de la ventana:
+                    self.ventanaAuxiliar = QWidget()
+                    
+                    #Se determina el alto y ancho:
+                    self.ventanaAuxiliar.setFixedHeight(100)
+                    self.ventanaAuxiliar.setFixedWidth(200)
+                    
+                    #Creamos un layout vertical para cada elemento de la cuadricula
+                    self.verticalCuadricula = QVBoxLayout()
+                    
+                    #Creamos un boton por cada usuario mostrando la cédula:
+                    self.botonAccion = QPushButton(self.usuarios[self.contador].documento)
+                    
+                    #Establecemos el ancho del botón
+                    self.botonAccion.setFixedWidth(150)
+                    #Estilo del botón
+                    self.botonAccion.setStyleSheet("background-color: #008B45;"
+                                                   "color: #FFFFFF;"
+                                                   "padding: 10px;")
+                    #Agregamos el layout al layout para que se vea
+                    self.verticalCuadricula.addWidget(self.botonAccion)
+                    
+                    #Agregamos el boton al grupo, su cédula como ID:
+                    self.botones.addButton(self.botonAccion, int(self.usuarios[self.contador].documento))
+                    
+                    #Agregamos un espacio en blanco
+                    self.verticalCuadricula.addStretch()
+                    
+                    #A la ventana le asignamos el layout vertical:
+                    self.ventanaAuxiliar.setLayout(self.verticalCuadricula)
+                    
+                    #A la ventana le asignamos el layout vertical:
+                    self.cuadricula.addWidget(self.ventanaAuxiliar, fila, columna)
+                    
+                    #Aumentamos el contador
+                    self.contador += 1
+                    
+        self.botones.idClicked.connect(self.metodo_accionBotones)
+        
+                    
 
 
 
         # ------------------- PONER AL FINAL --------------------
 
         self.imagen.setLayout(self.vertical)
+        
+        #Metodo para controlar las acciones de los botones
+    def metodo_accionBotones(self, cedulaUsuario):
+        print(cedulaUsuario)
+            
 
 # Hacer que la aplicación se genere
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 

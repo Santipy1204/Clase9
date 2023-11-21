@@ -373,7 +373,7 @@ class Ventana1(QMainWindow):
         self.vertical = QVBoxLayout()
 
         self.mensaje = QLabel('')
-        self.mensaje.setStyleSheet('backgroud-color: #EE6AA7 ; color: #000000 ; padding:10px;')
+        self.mensaje.setStyleSheet('background-color: #EE6AA7 ; color: #000000 ; padding:10px;')
         self.vertical.addWidget(self.mensaje)
         self.vertical.addWidget(self.opciones)
 
@@ -384,7 +384,7 @@ class Ventana1(QMainWindow):
             self.datosCorrectos = False
 
             self.mensaje.setText('Las contraseñas no son iguales')
-            self.mensaje.setStyleSheet('backgroud-color: #EE6AA7 ; color:#000000; padding:10px;')
+            self.mensaje.setStyleSheet('background-color: #EE6AA7 ; color:#000000; padding:10px;')
 
             self.ventanaDialogo.exec_()
 
