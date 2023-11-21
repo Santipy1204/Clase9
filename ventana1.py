@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QHBoxLayout, QFor
 from PyQt5.QtGui import QColor, QFont, QPixmap, QIcon
 from PyQt5.QtCore import Qt
 from cliente import Cliente
+from ventana2 import Ventana2
 
 
 class Ventana1(QMainWindow):
@@ -297,6 +298,18 @@ class Ventana1(QMainWindow):
         # agregamos los botones
         self.ladoDerecho.addRow(self.BotonBuscar, self.BotonRecuperar)
 
+        #boton continuar
+        self.BotonContinuar = QPushButton("Continuar")
+        self.BotonContinuar.setFixedWidth(90)
+        self.BotonContinuar.setStyleSheet("background-color: #008B45;"
+                                          "color: #FFFFFF;"
+                                          "padding: 10px;"
+                                          "margin-top: 40px;")
+
+        self.BotonContinuar.clicked.connect(self.accion_BotonContinuar)
+
+        # agregamos el boton
+        self.ladoDerecho.addRow(self.BotonContinuar)
 
 
         #agregamos el layout ladoderecho al layout horizontal
@@ -360,7 +373,7 @@ class Ventana1(QMainWindow):
         self.vertical = QVBoxLayout()
 
         self.mensaje = QLabel('')
-        self.mensaje.setStyleSheet('backgroud-color: #EE6AA7 ; color: #000000 ; padding:10px;')
+        self.mensaje.setStyleSheet('background-color: #EE6AA7 ; color: #000000 ; padding:10px;')
         self.vertical.addWidget(self.mensaje)
         self.vertical.addWidget(self.opciones)
 
@@ -371,7 +384,7 @@ class Ventana1(QMainWindow):
             self.datosCorrectos = False
 
             self.mensaje.setText('Las contraseñas no son iguales')
-            self.mensaje.setStyleSheet('backgroud-color: #EE6AA7 ; color:#000000; padding:10px;')
+            self.mensaje.setStyleSheet('background-color: #EE6AA7 ; color:#000000; padding:10px;')
 
             self.ventanaDialogo.exec_()
 
@@ -627,7 +640,11 @@ class Ventana1(QMainWindow):
                 
                 #Hacemos que la ventana dialogo se vea:
             self.ventanaDialogo.exec_()
-            
+
+    def accion_BotonContinuar(self):
+        self.hide()
+        self.ventana2 = Ventana2(self)
+        self.ventana2.show()
 
 
 if __name__ == "__main__":    # Hacer que la aplicación se genere
