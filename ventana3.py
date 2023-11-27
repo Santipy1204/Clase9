@@ -133,7 +133,7 @@ class Ventana3(QMainWindow):
          
         
         #Definimos el texto de la cabecera:
-        self.tabla.setHorizontalHeaderLabels(["Nombre",
+        self.tabla.setHorizontalHeaderLabels(["Nombre Completo",
                                               "Usuario",
                                               "Password",
                                               "Documento",
@@ -149,7 +149,7 @@ class Ventana3(QMainWindow):
         
         #Llenamos la tabla
         for u in self.usuarios:
-            self.tabla.setItem(self.contador, 0, QTableWidgetItem(u.nombre))
+            self.tabla.setItem(self.contador, 0, QTableWidgetItem(u.nombreCompleto))
             self.tabla.setItem(self.contador, 1, QTableWidgetItem(u.usuario))
             self.tabla.setItem(self.contador, 2, QTableWidgetItem(u.password))
             self.tabla.setItem(self.contador, 3, QTableWidgetItem(u.documento))

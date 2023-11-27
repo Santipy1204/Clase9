@@ -1,9 +1,9 @@
 class Cliente:
 
-    def __init__(self, nombre,
+    def __init__(self, nombreCompleto,
                 usuario,password,documento,correo,pregunta1,respuesta1,pregunta2,respuesta2,pregunta3,respuesta3):
 
-        self.nombre = nombre
+        self.nombreCompleto = nombreCompleto
         self.usuario = usuario
         self.password = password
         self.documento = documento
@@ -17,4 +17,4 @@ class Cliente:
 
 
 def __str__(self):
-    return f'Nombre:{self.nombre} Documento:{self.documento}'
+    return f'NombreCompleto:{self.nombreCompleto} Documento:{self.documento}'

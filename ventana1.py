@@ -81,11 +81,11 @@ class Ventana1(QMainWindow):
         )
         self.ladoIzquierdo.addRow(self.letrero2)
 
-        self.nombre = QLineEdit()
-        self.nombre.setFixedWidth(250)
+        self.nombreCompleto = QLineEdit()
+        self.nombreCompleto.setFixedWidth(250)
 
         self.ladoIzquierdo.addRow(
-            '<font color="#FFFFFF">Nombre completo*</font>', self.nombre)
+            '<font color="#FFFFFF">Nombre completo*</font>', self.nombreCompleto)
 
         self.usuario = QLineEdit()
         self.usuario.setFixedWidth(250)
@@ -347,7 +347,7 @@ class Ventana1(QMainWindow):
         self.datosCorrectos = True
 
     def accion_BotonLimpiar(self):
-        self.nombre.setText('')
+        self.nombreCompleto.setText('')
         self.usuario.setText('')
         self.password.setText('')
         self.password2.setText('')
@@ -389,7 +389,7 @@ class Ventana1(QMainWindow):
             self.ventanaDialogo.exec_()
 
         if (
-                self.nombre.text() == ''
+                self.nombreCompleto.text() == ''
                or self.usuario.text() == ''
                or self.password.text() == ''
                or self.password2.text() == ''
@@ -416,7 +416,7 @@ class Ventana1(QMainWindow):
             self.file = open('datos/clientes.txt', 'ab')
             # agrega los datos concatenados
             self.file.write(bytes(
-                self.nombre.text() + ';'
+                self.nombreCompleto.text() + ';'
                 + self.usuario.text() + ';'
                 + self.password.text() + ';'
                 + self.documento.text() + ';'
