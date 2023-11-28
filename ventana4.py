@@ -38,7 +38,7 @@ class Ventana4(QMainWindow):
         #  de fondo
         self.fondo = QLabel(self)
 
-        self.fondo.setStyleSheet("background-color: #B0E0E6;")
+        self.fondo.setStyleSheet("background-color: white;")
 
         self.setCentralWidget(self.fondo)
 
@@ -426,11 +426,9 @@ class Ventana4(QMainWindow):
 
 
     def accion_BotonLimpiar(self):
-        self.nombreCompleto.setText('')
         self.usuario.setText('')
         self.password.setText('')
         self.password2.setText('')
-        self.documento.setText('')
         self.correo.setText('')
         self.pregunta1.setText('')
         self.respuesta1.setText('')
@@ -627,4 +625,3 @@ if __name__ == "__main__":    # Hacer que la aplicación se genere
     ventana4.show()
 
     sys.exit(app.exec_())
-
